@@ -1,0 +1,49 @@
+##
+## PREREQUISITES
+##  ./numbers is a sorted list of 10-digit numbers
+##
+## Word database is not included in this repo!
+##
+##  Dictionaries are in word-number format:
+##  tr abcdefghijklmnopqrstuvwxyz 2223334445556667777888999 < 9letter.txt > 9letter.txt123
+##  paste PHRASES.10 PHRASES.10123 > PHRASES.10txt123
+##
+
+##
+## Put numbers in database
+##
+sqlite3 numbers.db
+
+
+CREATE TABLE numbersStaging (num, PRIMARY KEY(num));
+CREATE TABLE numbers        (num, last7, last4, PRIMARY KEY(num));
+CREATE INDEX l7 on numbers  (last7);
+CREATE INDEX l4 on numbers  (last4);
+
+.import numbers numbersStaging
+
+INSERT OR IGNORE INTO numbers SELECT num, substr(num,4), substr(num,7) FROM numbersStaging;
+
+
+##
+## Put words in database
+##
+CREATE TABLE wordsStaging   (word, PRIMARY KEY(word));
+CREATE TABLE words          (word, wnum, wnumfirst10, PRIMARY KEY(word));
+CREATE INDEX wnum on words  (wnum);
+CREATE INDEX w10 on words   (wnumfirst10);
+
+.import ../Wordlists/MarkDavies/PHRASES wordsStaging
+.import ../Wordlists/Scrabble/10letter.txt wordsStaging
+.import ../Wordlists/Scrabble/9letter.txt wordsStaging
+
+INSERT OR IGNORE INTO words SELECT word,word,word FROM wordsStaging;
+UPDATE words SET wnum = replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(word,'a','2'),'b','2'),'c','2'),'d','3'),'e','3'),'f','3'),'g','4'),'h','4'),'i','4'),'j','5'),'k','5'),'l','5'),'m','6'),'n','6'),'o','6'),'p','7'),'q','7'),'r','7'),'s','7'),'t','8'),'u','8'),'v','8'),'w','9'),'x','9'),'y','9'),'z','9');
+UPDATE words SET wnumfirst10 = substr(wnum,1,10);
+
+
+##
+## Extract
+##
+SELECT * FROM numbers,words WHERE num=wnum;
+SELECT * FROM numbers,words WHERE last7=wnum;
