@@ -6,6 +6,10 @@ mkdir ~/Desktop/GOOGLEVOICE; cd ~/Desktop/GOOGLEVOICE
 open /Applications/Charles.app
 open https://www.google.com/voice/b/0/setup/searchnew/?ac=484&start=0
 
+### I would rather add in something in curl or that uses a headless browser instead of assuming a user has X windows
+### Then can pull the google cookes 
+###   -- Randy Amiel
+
 URL="https://www.google.com/voice/b/0/setup/searchnew/"
 COOKIES="gv=DQAAAxxxxxx; PREF=xxxxx; xxxx SSID=xxxx" # PUT YOUR COOKIES IN HERE
 curl --cookie "$COOKIES" "${URL}?ac=484&q=484&start=0&country=US"
