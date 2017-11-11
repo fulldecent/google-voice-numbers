@@ -1,8 +1,13 @@
-##
-## PREREQUISITES
-##  ./numbers is a sorted list of 10-digit numbers
-##
-## Word database is not included in this repo!
+# Find Words
+
+**Prerequisites:**
+
+* `./numbers` is all the numbers
+* You need your own words list
+* ​
+
+## Put numbers into database
+
 ##
 ##  Dictionaries are in word-number format:
 ##  tr abcdefghijklmnopqrstuvwxyz 2223334445556667777888999 < 9letter.txt > 9letter.txt123
